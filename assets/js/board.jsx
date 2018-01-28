@@ -2,8 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 
-
-//A tile is {val: String, }
+// App state for Board is:
+//   { tiles: [List of Tiles],
+//    tilesMatched: Integer,
+//    selectedTiles: [List of Tiles],
+//    score: Integer,
+//    clicks: Integer,
+//    paused: Bool
+//    }
+//
+// A Tile is:
+//   { val: String,
+//     flipped: Bool,
+//     matched: Bool,
+//     id: Integer
+//   }
 
 export default function play_game(root){
   ReactDOM.render(<Board />, root);
@@ -21,10 +34,11 @@ class Board extends React.Component {
       clicks: 0,
       paused: false
     };
+
     this.newTiles = this.newTiles.bind(this);
 
   }
-
+  //executes newTiles() on page load
   componentDidMount(){
     window.addEventListener('load', this.newTiles);
   }
@@ -36,7 +50,7 @@ class Board extends React.Component {
     var rand;
     var temp;
 
-    //shuffle
+    //shuffles the array
     for (var i=alphabets.length-1; i>=0; i--){
       rand = Math.floor(Math.random() * alphabets.length);
       temp = alphabets[rand];
@@ -45,10 +59,15 @@ class Board extends React.Component {
     }
 
     let newtiles = [];
+
+    //adds Tiles to a new array
     for (var j = 0; j<alphabets.length; j++){
       let newtile = { val: alphabets[j], flipped: false, matched: false, id: j};
       newtiles.push(newtile);
     }
+
+    //sets the tiles in the state to the new array
+
     this.setState({tiles: newtiles,
                   tilesMatched: 0,
                   selectedTiles: [],
@@ -60,17 +79,21 @@ class Board extends React.Component {
 
   }
 
+//handles the click events on tiles
   clickTile(card) {
+    //if the game is not paused or card has not matched or isnt flipped
+    // do the following
     if(!this.state.paused){
       if(!card.matched){
         if(!card.flipped){
+          //clone selected tiles array
           let tilesSelected = this.state.selectedTiles.slice();
-          if (tilesSelected.length<2){
 
+          //if not more than 2 tiles are selected, do the following
+          if (tilesSelected.length<2){
             this.flipCard(card);
             let clickedTile = card;
             tilesSelected.push(clickedTile);
-
             let st;
             let clicks = this.state.clicks;
             clicks = clicks + 1;
@@ -233,7 +256,5 @@ function Tile(props) {
         name = "?";
       }
   }
-
   return <Button className={style} val={card1.val} id={card1.id} onClick={() => props.clickTile(card1)}>{name}</Button>
-
 }
