@@ -29,6 +29,8 @@ class Demo extends React.Component {
       </div>
     );
   }
+
+  
 }
 
 function Side(params) {
@@ -47,4 +49,3 @@ function Side(params) {
     );
   }
 }
-
