@@ -26,22 +26,23 @@ class Board extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      tiles: [],
-      tilesMatched: 0,
-      selectedTiles: [],
-      score: 0,
-      clicks: 0,
-      paused: false
-    };
+    // this.state = {
+    //   tiles: [],
+    //   tilesMatched: 0,
+    //   selectedTiles: [],
+    //   score: 0,
+    //   clicks: 0,
+    //   paused: false
+    // };
 
-    this.newTiles = this.newTiles.bind(this);
+    this.state = this.newTiles();
+    // this.newTiles = this.newTiles.bind(this);
 
   }
   //executes newTiles() on page load
-  componentDidMount(){
-    window.addEventListener('load', this.newTiles);
-  }
+  // componentDidMount(){
+  //   window.addEventListener('load', this.newTiles);
+  // }
 
 
   //shuffles the cards and generates a new board
@@ -67,19 +68,27 @@ class Board extends React.Component {
     }
 
     //sets the tiles in the state to the new array
+    //
+    // this.setState({tiles: newtiles,
+    //               tilesMatched: 0,
+    //               selectedTiles: [],
+    //               score: 0,
+    //               clicks: 0,
+    //               paused: false
+    //             })
 
-    this.setState({tiles: newtiles,
-                  tilesMatched: 0,
-                  selectedTiles: [],
-                  score: 0,
-                  clicks: 0,
-                  paused: false
-                })
+    return {
+                  tiles: newtiles,
+                    tilesMatched: 0,
+                    selectedTiles: [],
+                    score: 0,
+                    clicks: 0,
+                    paused: false
 
+    };
 
   }
 
-//handles the click events on tiles
   clickTile(card) {
     //if the game is not paused or card has not matched or isnt flipped
     // do the following
@@ -136,6 +145,10 @@ class Board extends React.Component {
 
     this.setState(st);
 
+  }
+
+  restartGame(){
+    this.setState(this.newTiles());
   }
 
   checkMatch(){
@@ -216,7 +229,7 @@ class Board extends React.Component {
         </div>
         <div className="below">
           <div className="below-content">
-            <Button id="reset" onClick={this.newTiles.bind(this)}>Restart</Button>
+            <Button id="reset" onClick={this.restartGame.bind(this)}>Restart</Button>
             <p id="score">Score: {this.state.score}</p>
         </div>
         </div>
