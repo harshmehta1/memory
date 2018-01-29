@@ -26,23 +26,10 @@ class Board extends React.Component {
   constructor(props){
     super(props);
 
-    // this.state = {
-    //   tiles: [],
-    //   tilesMatched: 0,
-    //   selectedTiles: [],
-    //   score: 0,
-    //   clicks: 0,
-    //   paused: false
-    // };
 
     this.state = this.newTiles();
-    // this.newTiles = this.newTiles.bind(this);
 
   }
-  //executes newTiles() on page load
-  // componentDidMount(){
-  //   window.addEventListener('load', this.newTiles);
-  // }
 
 
   //shuffles the cards and generates a new board
@@ -67,15 +54,6 @@ class Board extends React.Component {
       newtiles.push(newtile);
     }
 
-    //sets the tiles in the state to the new array
-    //
-    // this.setState({tiles: newtiles,
-    //               tilesMatched: 0,
-    //               selectedTiles: [],
-    //               score: 0,
-    //               clicks: 0,
-    //               paused: false
-    //             })
 
     return {
                   tiles: newtiles,
@@ -88,6 +66,8 @@ class Board extends React.Component {
     };
 
   }
+
+
 
   clickTile(card) {
     //if the game is not paused or card has not matched or isnt flipped
@@ -151,8 +131,8 @@ class Board extends React.Component {
     this.setState(this.newTiles());
   }
 
-  checkMatch(){
 
+  checkMatch(){
     let selectedTiles = this.state.selectedTiles.slice();
     let newScore = this.state.score;
     if(selectedTiles[0].val == selectedTiles[1].val){
@@ -187,7 +167,7 @@ class Board extends React.Component {
       console.log(this.state)
 
     } else {
-      //reflip
+
       newScore = newScore - 5;
      for (var i=0; i<selectedTiles.length; i++){
           this.flipCard(selectedTiles[i]);
@@ -217,7 +197,7 @@ class Board extends React.Component {
     let game_over = <div></div>;
     let tileCount = this.state.tiles.length;
     if(tileCount>0 && tileCount == this.state.tilesMatched){
-      game_over = <Popup score={this.state.score} restart={this.newTiles.bind(this)} />;
+      game_over = <Popup score={this.state.score} restart={this.restartGame.bind(this)} />;
     }
 
 
@@ -252,7 +232,7 @@ function Popup(props){
   )
 }
 
-
+//returns the element for tile
 function Tile(props) {
 
   let card1 = props.card;

@@ -32,8 +32,8 @@ body {
 
   background-color: white;
   border: 10px solid black;
-  width: 50%;
-  height: 50%;
+  width: 30%;
+  height: 30%;
   position: absolute;
   margin: auto;
   top: 50%;
@@ -56,8 +56,9 @@ width: 100%;
 
 .grid-container {
   display: grid;
-  grid-template-columns: minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px);
-  grid-template-rows: minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px);
+  margin-top:10px;
+  grid-template-columns: minmax(50px, 150px) minmax(50px, 150px) minmax(50px, 150px) minmax(50px, 150px);
+  grid-template-rows: minmax(50px, 150px) minmax(50px, 150px) minmax(50px, 150px) minmax(50px, 150px);
   grid-gap: 10px;
   justify-content: center;
 }
@@ -78,7 +79,7 @@ width: 100%;
 .below {
   display: inline-block;
   text-align: center;
-  padding-top: 5px;
+  padding-top: 8px;
   width: 100%;
   margin:auto;
 
@@ -86,14 +87,15 @@ width: 100%;
 
 .below-content {
 margin: auto;
-width: 30%;
+width: 20%;
 padding: 2px;
 
 }
 
 #score {
   float: left;
-  padding: 15px;
+  padding-top: 6px;
+  padding-left: 15px;
   margin: auto;
   font-weight:bolder;
   font-size: 20px;
@@ -102,10 +104,10 @@ padding: 2px;
 
 #reset {
   float: left;
-  padding: 15px 32px;
+  padding: 10px 20px;
   background-color: red;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
