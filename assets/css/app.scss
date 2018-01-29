@@ -12,7 +12,6 @@ body {
 
   top: 50%;
   left: 50%;
-  margin: 10px;
   transform: translate(-50%, -50%);
   position: relative;
 
@@ -32,8 +31,8 @@ body {
 
   background-color: white;
   border: 10px solid black;
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 25%;
   position: absolute;
   margin: auto;
   top: 50%;
@@ -122,6 +121,8 @@ padding: 2px;
 }
 
 .side { padding: 4ex; text-align: center; }
-h1 { text-align: center;
-
+h1 {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 2px;
 }

@@ -22,6 +22,10 @@ export default function play_game(root){
   ReactDOM.render(<Board />, root);
 }
 
+
+const addScore = 20;
+const reduceScore = 5;
+
 class Board extends React.Component {
   constructor(props){
     super(props);
@@ -67,7 +71,7 @@ class Board extends React.Component {
   }
 
 
-
+//handles the click event of tile
   clickTile(card) {
     //if the game is not paused or card has not matched or isnt flipped
     // do the following
@@ -107,7 +111,7 @@ class Board extends React.Component {
   }
 }
 
-
+//flips the tile on click
   flipCard(card){
 
     let xs = _.map(this.state.tiles, (tile) =>{
@@ -126,18 +130,22 @@ class Board extends React.Component {
 
   }
 
+  //restarts the game by initializing new set of tiles
   restartGame(){
     this.setState(this.newTiles());
   }
 
-
+//checks if the two selected tiles have matched
   checkMatch(){
+    //clone array
     let selectedTiles = this.state.selectedTiles.slice();
     let newScore = this.state.score;
     if(selectedTiles[0].val == selectedTiles[1].val){
       //matched - success
       let id1 = selectedTiles[0].id;
       let id2 = selectedTiles[1].id;
+
+      //map over the tile list and change the property of the two tiles to matched
       let xs = _.map(this.state.tiles, (tile) => {
         if(tile.id == id1 || tile.id == id2){
           return _.extend(tile, {matched: true});
@@ -146,11 +154,14 @@ class Board extends React.Component {
         }
       });
 
+      //add 2 to the number of tiles matched till now
       let matched = this.state.tilesMatched;
       matched = matched + 2;
 
-      newScore = newScore + 20;
+      //increases score according to constant
+      newScore = newScore + addScore;
 
+      //updating the state
       let st = _.extend(this.state, {
         tiles: xs,
         tilesMatched: matched,
@@ -160,17 +171,18 @@ class Board extends React.Component {
 
       this.setState(st);
 
-      if(matched == this.state.tiles.length){
-
-      }
-      console.log(this.state)
 
     } else {
 
-      newScore = newScore - 5;
+      //reduce score according to constant
+      newScore = newScore - reduceScore;
+
+      //flipping cards again as match not correct
      for (var i=0; i<selectedTiles.length; i++){
           this.flipCard(selectedTiles[i]);
         }
+
+        //updating state
         let st = _.extend(this.state, {
           score: newScore,
           paused: false
@@ -180,6 +192,7 @@ class Board extends React.Component {
 
     }
 
+    //updating the state
     let newSelected = [];
     let st1 = _.extend(this.state, {
       selectedTiles: newSelected
@@ -188,11 +201,14 @@ class Board extends React.Component {
   }
 
 
+
   render() {
+    //generates a list of Tiles
     let tile_list = _.map(this.state.tiles, (tile, ii) => {
       return <Tile card={tile} clickTile={this.clickTile.bind(this)} key={ii} />;
     });
 
+    //if game over, generates a pop up otherwise passes an empty div
     let game_over = <div></div>;
     let tileCount = this.state.tiles.length;
     if(tileCount>0 && tileCount == this.state.tilesMatched){
@@ -218,6 +234,8 @@ class Board extends React.Component {
 
 }
 
+//this function generates a function when player wins the game
+// it displays score as well as option to play again
 function Popup(props){
   let score=props.score;
   return(
@@ -237,6 +255,8 @@ function Tile(props) {
   let card1 = props.card;
   var name;
   let style;
+
+  //decide the className and text to show depending on properties like matched and flipped
   if(card1.matched){
     style = "tile-matched"
     name = "✔"
